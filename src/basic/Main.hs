@@ -59,7 +59,13 @@ updateGame dt input game = updateMousePosition input $ updatePos dt input game
 -- Rendering the game
 renderGame :: BasicGame -> Scene
 renderGame (BasicGame pos mousePos) = do
+  color3i 0 0 255
+  renderRectangle ((mousePos * Vector 0 1) - (Vector 1 0)) $ Vector 2 2
+
+  color3i 255 0 0
   renderSquare pos      size
+
+  color3i 0 255 0
   renderSquare mousePos size
 
 -- Giving BasicGame a Game instance.
