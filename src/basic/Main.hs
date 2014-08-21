@@ -20,15 +20,15 @@ right = Vector ( 1) ( 0)
 
 -- The speed in which pos should move
 speedCfg :: Float
-speedCfg = 0.05
+speedCfg = 0.5
 
 -- The size rendered squares should take
 size :: Float
 size = 0.05
 
 -- Applying the speed to a vector
-speed :: Vector Float -> Vector Float
-speed vec = vec * Vector speedCfg speedCfg
+speed :: DeltaTime -> Vector Float -> Vector Float
+speed dt vec = vec * Vector (speedCfg * dt) (speedCfg * dt)
 
 -- A basic game type
 data BasicGame = BasicGame { pos      :: Vector Float
@@ -38,10 +38,10 @@ data BasicGame = BasicGame { pos      :: Vector Float
 -- Updating the game
 updatePos :: DeltaTime -> Input -> BasicGame -> BasicGame
 updatePos dt input game =
-  move dt game [ (keyboard input ! CharKey 'W', speed up   )
-               , (keyboard input ! CharKey 'S', speed down )
-               , (keyboard input ! CharKey 'A', speed left )
-               , (keyboard input ! CharKey 'D', speed right)
+  move dt game [ (keyboard input ! CharKey 'W', speed dt up   )
+               , (keyboard input ! CharKey 'S', speed dt down )
+               , (keyboard input ! CharKey 'A', speed dt left )
+               , (keyboard input ! CharKey 'D', speed dt right)
                ]
   where move :: DeltaTime -> BasicGame -> [(Bool, Vector Float)] -> BasicGame
         move dt game                   []              = game
