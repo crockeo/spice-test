@@ -4,7 +4,6 @@ module Update where
 -- Global Imports --
 import FRP.Spice.Math
 import FRP.Spice
-import Debug.Trace
 
 -------------------
 -- Local Imports --
@@ -76,9 +75,6 @@ move :: DeltaTime -> Jumper -> Jumper
 move dt jumper =
   jumper { pos = pos jumper + (scalar (dir jumper) dt) }
 
-logPos :: Jumper -> Jumper
-logPos jumper = traceShow (pos jumper) jumper
-
 -- Updating the game state
 updateJumper :: DeltaTime -> Input -> Jumper -> Jumper
 updateJumper dt input jumper =
@@ -86,7 +82,6 @@ updateJumper dt input jumper =
                   , jumpIfCan input
                   , lrInput input
                   , move dt
-                  , logPos
                   ]
   where applyAll :: a -> [a -> a] -> a
         applyAll a []     = a
