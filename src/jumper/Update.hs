@@ -24,6 +24,10 @@ gravity = 0.2
 speed :: Float
 speed = 0.5
 
+-- The speed in which one can move the ground up and down
+groundSpeed :: Float
+groundSpeed = 0.3
+
 -- Checking if the player is on the ground.
 onGround :: Jumper -> Bool
 onGround jumper =
@@ -35,6 +39,17 @@ onGround jumper =
 -- Checking if the player is in the air.
 inAir :: Jumper -> Bool
 inAir = not . onGround
+
+-- Moving the ground
+moveGround :: DeltaTime -> Input -> Jumper -> Jumper
+moveGround dt input jumper
+  | up && down = jumper
+  | up         = jumper { groundLevel = ground + (groundSpeed * dt) }
+  | down       = jumper { groundLevel = ground - (groundSpeed * dt) }
+  | otherwise  = jumper
+  where up     = keyboard input ! SpecialKey UP
+        down   = keyboard input ! SpecialKey DOWN
+        ground = groundLevel jumper
 
 -- Updating the gravity on the player
 updateGravity :: DeltaTime -> Jumper -> Jumper
@@ -78,7 +93,8 @@ move dt jumper =
 -- Updating the game state
 updateJumper :: DeltaTime -> Input -> Jumper -> Jumper
 updateJumper dt input jumper =
-  applyAll jumper [ updateGravity dt
+  applyAll jumper [ moveGround dt input
+                  , updateGravity dt
                   , jumpIfCan input
                   , lrInput input
                   , move dt
