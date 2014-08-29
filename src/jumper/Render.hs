@@ -4,6 +4,7 @@ module Render where
 -- Global Imports --
 import FRP.Spice.Graphics
 import FRP.Spice.Math
+import FRP.Spice
 
 -------------------
 -- Local Imports --
@@ -16,8 +17,8 @@ grey :: Color
 grey = color3i 127 127 127
 
 -- Updating the game state
-renderJumper :: Jumper -> Scene
-renderJumper jumper = do
+renderJumper :: Assets -> Jumper -> Scene
+renderJumper _ jumper = do
   bindColor white
   renderRectangle (pos jumper) (size jumper)
 

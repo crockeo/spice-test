@@ -11,5 +11,6 @@ import Render
 import Update
 
 instance Game Jumper where
-  update = updateJumper
-  render = renderJumper
+  update       = updateJumper
+  render       = renderJumper
+  loadAssets _ = return ()

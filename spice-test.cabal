@@ -1,5 +1,5 @@
 name:                spice-test
-version:             0.2.1.0
+version:             0.3.0.0
 synopsis:            A number of examples / tests for my spice framework.
 homepage:            http://github.com/crockeo/spice-test
 license:             MIT
@@ -18,7 +18,7 @@ executable basic
   hs-source-dirs:      src/basic/
 
   build-depends:       base         == 4.7.*
-               ,       spice        == 0.3.3.2
+               ,       spice        == 0.4.0.0
                ,       data-default == 0.5.*
 
   default-language:    Haskell2010
@@ -30,7 +30,7 @@ executable jumper
   hs-source-dirs:      src/jumper/
 
   build-depends:       base         == 4.7.*
-               ,       spice        == 0.3.3.2
+               ,       spice        == 0.4.0.0
                ,       data-default == 0.5.*
 
   default-language:    Haskell2010

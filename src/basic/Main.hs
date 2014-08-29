@@ -62,8 +62,8 @@ updateGame :: DeltaTime -> Input -> BasicGame -> BasicGame
 updateGame dt input game = updateMousePosition input $ updatePos dt input game
 
 -- Rendering the game
-renderGame :: BasicGame -> Scene
-renderGame (BasicGame pos mousePos) = do
+renderGame :: Assets -> BasicGame -> Scene
+renderGame _ (BasicGame pos mousePos) = do
   bindColor $ color3i 0 0 255
   renderRectangle ((mousePos * Vector 0 1) - (Vector 1 0)) $ Vector 2 2
 
@@ -75,8 +75,9 @@ renderGame (BasicGame pos mousePos) = do
 
 -- Giving BasicGame a Game instance.
 instance Game BasicGame where
-  update dt input game = updateGame dt input game
-  render          game = renderGame          game
+  update       = updateGame
+  render       = renderGame
+  loadAssets _ = return ()
 
 -- Starting the game
 main :: IO ()
