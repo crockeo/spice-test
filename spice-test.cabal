@@ -34,3 +34,15 @@ executable jumper
                ,       data-default == 0.5.*
 
   default-language:    Haskell2010
+
+-- Running the application stored in src/sprite/
+executable sprite
+  main-is:             Main.hs
+
+  hs-source-dirs:      src/sprite/
+
+  build-depends:       base         == 4.7.*
+               ,       spice        == 0.5.0.0
+               ,       data-default == 0.5.*
+
+  default-language: Haskell2010
