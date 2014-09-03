@@ -2,8 +2,7 @@ module Render where
 
 --------------------
 -- Global Imports --
-import FRP.Spice.Graphics
-import FRP.Spice.Math
+import Data.Monoid
 import FRP.Spice
 
 -------------------
@@ -19,6 +18,9 @@ grey = color3i 127 127 127
 -- Updating the game state
 renderJumper :: Assets -> Jumper -> Scene
 renderJumper _ jumper = do
+  let (Vector _ y) = pos jumper
+      h            = groundLevel jumper
+  putStrLn $ mconcat ["Y: ", show y, ", H: ", show h]
   bindColor white
   renderRectangle (pos jumper) (size jumper)
 

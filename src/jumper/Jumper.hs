@@ -2,7 +2,7 @@ module Jumper where
 
 --------------------
 -- Global Imports --
-import FRP.Spice.Math
+import FRP.Spice
 
 ----------
 -- Code --

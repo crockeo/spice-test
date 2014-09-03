@@ -2,7 +2,7 @@ module Main where
 
 --------------------
 -- Global Imports --
-import FRP.Spice.Math
+import Data.Default
 import FRP.Spice
 
 -------------------
@@ -25,7 +25,7 @@ initState =
 -- Custom configuration of the WindowConfig
 windowConfig :: WindowConfig
 windowConfig =
-  defaultWindowConfig { getWindowTitle = "Jumper - Spice-Test" }
+  def { getWindowTitle = "Jumper - Spice-Test" }
 
 -- The main function
 main :: IO ()

@@ -2,7 +2,6 @@ module Update where
 
 --------------------
 -- Global Imports --
-import FRP.Spice.Math
 import FRP.Spice
 
 -------------------
@@ -47,17 +46,17 @@ moveGround dt input jumper
   | up         = jumper { groundLevel = ground + (groundSpeed * dt) }
   | down       = jumper { groundLevel = ground - (groundSpeed * dt) }
   | otherwise  = jumper
-  where up     = keyboard input ! SpecialKey UP
-        down   = keyboard input ! SpecialKey DOWN
+  where up     = key input ! SpecialKey UP
+        down   = key input ! SpecialKey DOWN
         ground = groundLevel jumper
 
 -- Updating the gravity on the player
 updateGravity :: DeltaTime -> Jumper -> Jumper
 updateGravity dt jumper =
   if onGround jumper
-    then jumper { pos = Vector x (ground - h)
-                , dir = Vector dx 0 }
-
+    then jumper { pos = Vector x (ground - h + h / 10)
+                , dir = Vector dx 0
+                }
     else jumper { dir = Vector dx (dy - (gravity * speed)) }
   where (Vector  x  y) = pos jumper
         (Vector dx dy) = dir jumper
@@ -69,7 +68,7 @@ jumpIfCan :: Input -> Jumper -> Jumper
 jumpIfCan input jumper =
   if inAir jumper
     then jumper
-    else if keyboard input ! CharKey ' '
+    else if key input ! CharKey ' '
       then jumper { dir = Vector dx jumpSpeed }
       else jumper
   where (Vector dx _) = dir jumper
@@ -82,13 +81,13 @@ lrInput input jumper
   | right         = jumper { dir = Vector ( speed) dy }
   | otherwise     = jumper { dir = Vector 0        dy }
   where (Vector _ dy) = dir jumper
-        left          = keyboard input ! CharKey 'A'
-        right         = keyboard input ! CharKey 'D'
+        left          = key input ! CharKey 'A'
+        right         = key input ! CharKey 'D'
 
 -- Moving the speed
 move :: DeltaTime -> Jumper -> Jumper
 move dt jumper =
-  jumper { pos = pos jumper + (scalar (dir jumper) dt) }
+  jumper { pos = pos jumper ^+ dir jumper ^*> dt }
 
 -- Updating the game state
 updateJumper :: DeltaTime -> Input -> Jumper -> Jumper
